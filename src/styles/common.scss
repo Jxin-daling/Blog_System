@@ -1,4 +1,19 @@
 *{
     margin: 0;
     padding: 0;
+    font-family: cute;
+}
+
+html,body{
+    background: url('../../public/bg2.jpg');
+    background-size: cover;
+}
+
+a{
+    text-decoration: none;
+}
+
+@font-face {
+    font-family: cute;
+    src: url('../assets/STHeiti-Light-2.ttc');
 }
