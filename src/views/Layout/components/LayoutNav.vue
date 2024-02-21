@@ -23,10 +23,11 @@ const list = ref([
 ])
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .container{
     height: 100%;
     background: rgba(1, 1, 1, 0.1);
+    box-shadow: 0 5px 10px rgb(86, 68, 68);
 
     .nav{
         padding: 10px 0;
