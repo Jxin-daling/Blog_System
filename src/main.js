@@ -17,4 +17,8 @@ app.use(pinia)
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 pinia.use(piniaPluginPersistedstate)
 
+// 路由引入
+import router from '@/router/index'
+app.use(router)
+
 app.mount('#app')

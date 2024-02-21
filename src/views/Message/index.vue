@@ -1,5 +1,5 @@
 <template>
-    <router-view></router-view>
+    留言
 </template>
 
 <script setup>

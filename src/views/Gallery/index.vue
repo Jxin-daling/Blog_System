@@ -1,5 +1,5 @@
 <template>
-    <router-view></router-view>
+  画廊
 </template>
 
 <script setup>

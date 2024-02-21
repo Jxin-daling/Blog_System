@@ -1,5 +1,5 @@
 <template>
-    <router-view></router-view>
+    分类
 </template>
 
 <script setup>
