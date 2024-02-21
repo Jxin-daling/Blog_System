@@ -3,7 +3,7 @@ import { createRouter,createWebHistory } from "vue-router";
 // 二级路由
 const children = [
     {
-        path:'home',
+        path:'',
         component:()=>import('@/views/Home/index.vue')
     },
     {
