@@ -1,15 +1,17 @@
 <template>
-    <div class="container_pic">
-        <el-card v-for="(item,index) in piclist" :key="index" class="card">
-            <img
-                :src="item.imgurl"
-                class="image"
-            />
-            <div style="padding: 14px">
-                <span>{{ item.name }}</span>
-                <el-button text class="button">like</el-button>
-            </div>
-        </el-card>
+    <div class="container">
+        <div class="container_pic">
+            <el-card v-for="(item,index) in piclist" :key="index" class="card">
+                <img
+                    :src="item.imgurl"
+                    class="image"
+                />
+                <div style="padding: 14px">
+                    <span>{{ item.name }}</span>
+                    <el-button text class="button">like</el-button>
+                </div>
+            </el-card>
+        </div>
     </div>
 </template>
 
