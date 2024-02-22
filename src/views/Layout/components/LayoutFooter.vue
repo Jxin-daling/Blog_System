@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container_footer">
         <el-row class="footer">
           
         </el-row>
@@ -7,24 +7,15 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 
-const list = ref([
-    {path:'/',pathname:'主页'},
-    {path:'/category',pathname:'分类'},
-    {path:'/gallery',pathname:'画廊'},
-    {path:'/message',pathname:'留言'},
-    {path:'/about',pathname:'关于'}
-])
 </script>
 
 <style lang="scss" scoped>
-.container{
-    height: 15vh;
+.container_footer{
+    width: 100%;
+    height: 10vh;
     background: rgba(1, 1, 1, 0.5);
-
-    .footer{
-        
-    }
+    // position: absolute;
+    // bottom: 0;
 }
 </style>

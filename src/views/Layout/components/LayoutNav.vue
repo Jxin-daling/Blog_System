@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container_nav">
         <el-row class="nav">
             <el-col :span="3">logo</el-col>
             <el-col :span="6"><input type="text" class="search"></el-col>
@@ -24,7 +24,7 @@ const list = ref([
 </script>
 
 <style lang="scss" scoped>
-.container{
+.container_nav{
     height: 100%;
     background: rgba(1, 1, 1, 0.1);
     box-shadow: 0 5px 10px rgb(86, 68, 68);
