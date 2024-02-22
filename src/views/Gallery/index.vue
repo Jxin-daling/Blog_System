@@ -1,9 +1,9 @@
 <template>
-  画廊
+    <PicIitem/>
 </template>
 
 <script setup>
-
+import PicIitem from './components/PicIitem.vue';
 </script>
 
 <style>
