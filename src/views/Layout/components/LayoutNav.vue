@@ -1,10 +1,9 @@
 <template>
     <div class="container_nav">
         <el-row class="nav">
-            <el-col :span="3">logo</el-col>
-            <el-col :span="6"><input type="text" class="search"></el-col>
-            <el-col :span="5">下拉按钮</el-col>
-            <el-col v-for="(item,index) in list" :key="index" :span="2">
+            <el-col :span="2">logo</el-col>
+            <el-col :span="2" @click="down" class="downarrow">⬇</el-col>
+            <el-col v-for="(item,index) in list" :key="index" :span="4" class="nav_active">
                 <router-link :to="`${item.path}`">{{ item.pathname }}</router-link>
             </el-col>
         </el-row>
@@ -13,14 +12,19 @@
 
 <script setup>
 import { ref } from "vue";
+const emit = defineEmits(['changehandler'])
 
 const list = ref([
-    {path:'/',pathname:'主页'},
+    {path:'/home',pathname:'主页'},
     {path:'/category',pathname:'分类'},
     {path:'/gallery',pathname:'画廊'},
     {path:'/message',pathname:'留言'},
     {path:'/about',pathname:'关于'}
 ])
+
+const down = ()=>{
+    emit('changehandler')
+}
 </script>
 
 <style lang="scss" scoped>
@@ -31,13 +35,53 @@ const list = ref([
 
     .nav{
         padding: 10px 0;
-        font-size: 25px;
+        font-size: 25px;     
 
-        .search{
-            width: 80%;
-            padding-left: 10px;
+        .downarrow{
+            cursor: pointer;
+        }
+
+        .nav_active{
+            position: relative;
+            text-align: center;
+        }
+
+        .nav_active::before{
+            position: absolute;
+            content: '';
+            left: 0;
+            width: 10px;
+            height: 100%;
+            background-color: black;
+        }
+
+        .nav_active::after{
+            position: absolute;
+            content: '';
+            right: 0;
+            width: 10px;
+            height: 100%;
+            background-color: black;
+        }
+
+        .nav_active:has(.active){
+            background:linear-gradient(90deg,white,transparent);
             border-radius: 10px;
-            height: 80%;
+        }
+
+        .active{
+            color: green;
+        }
+
+        .active::before{
+            content: "";
+            position: absolute;
+            left: 50px;
+            top: -10px;
+            width: 100px;
+            height: 50px;
+            border: 3px solid rgba(1,1,1,0.6);
+            border-radius: 90%;
         }
     }
 }
