@@ -34,6 +34,7 @@ let piclist = ref([
 
 <style lang="scss">
 .container_pic{
+    margin: 0 10vw;
     column-count: 3;
     column-gap: 0;
 
