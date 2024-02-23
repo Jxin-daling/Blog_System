@@ -1,5 +1,5 @@
 <template>
-  
+    admin
 </template>
 
 <script setup>
