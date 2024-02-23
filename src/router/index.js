@@ -3,7 +3,11 @@ import { createRouter,createWebHistory } from "vue-router";
 // 二级路由
 const children = [
     {
-        path:'',
+        path:'/',
+        redirect:'home'
+    },
+    {
+        path:'home',
         component:()=>import('@/views/Home/index.vue')
     },
     {
@@ -30,6 +34,10 @@ const routes = [
         path:'/',
         component:()=>import('@/views/Layout/index.vue'),
         children
+    },
+    {
+        path:'/admin',
+        component:()=>import('@/views/Admin/index.vue')
     }
 ]
 
@@ -37,7 +45,8 @@ const routes = [
 
 const router = createRouter({
     history:createWebHistory(import.meta.env.BASE_URL),
-    routes
+    routes,
+    linkActiveClass:'active'
 })
 
 export default router
