@@ -1,18 +1,15 @@
 *{
     margin: 0;
     padding: 0;
-    font-family: cute;
-}
-
-html,body{
-    // background: url('../../public/bg2.jpg');
-    // background-size: cover;
+    list-style: none;
 }
 
 a{
     text-decoration: none;
+    color: black;
 }
 
+// 字体库声明
 @font-face {
     font-family: cute;
     src: url('../assets/STHeiti-Light-2.ttc');
