@@ -8,7 +8,6 @@
                 :rules="rules"
                 class="demo-ruleForm"
                 :size="formSize"
-                status-icon
             >
                 <el-form-item label="昵称" prop="name">
                     <el-input v-model="name" placeholder="不填或空填默认匿名哦"/>
@@ -46,7 +45,7 @@
 </template>
   
 <script setup>
-import { reactive,ref } from "vue";
+import { ref } from "vue";
 const name = ref('')
 const textarea = ref('')
 </script>
