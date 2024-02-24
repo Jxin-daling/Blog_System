@@ -1,49 +1,171 @@
 import { createRouter,createWebHistory } from "vue-router";
 
-// 二级路由
-const children = [
+// 前端二级路由
+export const indexchildren = [
     {
         path:'/',
-        redirect:'home'
+        redirect:'home',
+        meta:{
+            hidden:true
+        }
     },
     {
         path:'home',
-        component:()=>import('@/views/Home/index.vue')
+        component:()=>import('@/views/Home/index.vue'),
+        meta:{
+            title:'主页',
+            hidden:false
+        }
     },
     {
         path:'category',
-        component:()=>import('@/views/Category/index.vue')
+        component:()=>import('@/views/Category/index.vue'),
+        meta:{
+            title:'分类',
+            hidden:false
+        }
     },
     {
         path:'gallery',
-        component:()=>import('@/views/Gallery/index.vue')
+        component:()=>import('@/views/Gallery/index.vue'),
+        meta:{
+            title:'画廊',
+            hidden:false
+        }
     },
     {
         path:'message',
-        component:()=>import('@/views/Message/index.vue')
+        component:()=>import('@/views/Message/index.vue'),
+        meta:{
+            title:'留言',
+            hidden:false
+        }
     },
     {
         path:'about',
-        component:()=>import('@/views/About/index.vue')
+        component:()=>import('@/views/About/index.vue'),
+        meta:{
+            title:'关于',
+            hidden:false
+        }
     }
 ]
 
-// 一级路由
-const routes = [
+export const routes = [
+    // 前端一级路由
     {
         path:'/',
         component:()=>import('@/views/Layout/index.vue'),
-        children
+        children:indexchildren,
+        meta:{
+            hidden:true
+        }
+    },
+    // 后台路由
+    {
+        path:'/Admin',
+        meta:{
+            hidden:true
+        },
+        redirect:'AdminIndex'
     },
     {
-        path:'/admin',
-        component:()=>import('@/views/Admin/index.vue')
+        path:'/AdminIndex',
+        component:()=>import('@/views/Admin/index.vue'),
+        redirect:'/AdminIndex/watch',
+        children:[
+            {
+                path:'watch',
+                component:()=>import('@/views/AdminIndex/index.vue')
+            }
+        ],
+        meta:{
+            title:'后台首页',
+            hidden:false
+        }
+    },
+    {
+        path:'/ArticleManage',
+        component:()=>import('@/views/Admin/index.vue'),
+        children:[
+            {
+                path:'/ArticleManage/ArticleInfo',
+                component:()=>import('@/views/AricleManage/ArticleInfo/index.vue'),
+                meta:{
+                    title:'文章信息'
+                }
+            },
+            {
+                path:'/ArticleManage/ArticlePost',
+                component:()=>import('@/views/AricleManage/ArticlePost/index.vue'),
+                meta:{
+                    title:'文章发布'
+                }
+            }
+        ],
+        meta:{
+            title:'文章管理',
+            hidden:false
+        }
+    },
+    {
+        path:'/CategoryManage',
+        component:()=>import('@/views/Admin/index.vue'),
+        redirect:'/CategoryManage/editor',
+        children:[
+            {
+                path:'editor',
+                component:()=>import('@/views/CategoryManage/index.vue')
+            }
+        ],
+        meta:{
+            title:'分类管理',
+            hidden:false
+        }
+    },
+    {
+        path:'/GalleryManage',
+        component:()=>import('@/views/Admin/index.vue'),
+        redirect:'/GalleryManage/editor',
+        children:[
+            {
+                path:'editor',
+                component:()=>import('@/views/GalleryManage/index.vue')
+            }
+        ],
+        meta:{
+            title:'画廊管理',
+            hidden:false
+        }
+    },
+    {
+        path:'/MessageManage',
+        component:()=>import('@/views/Admin/index.vue'),
+        children:[
+            {
+                path:'/MessageManage/MessageVisitor',
+                component:()=>import('@/views/MessageManage/MessageVisitor/index.vue'),
+                meta:{
+                    title:'访客留言'
+                }
+            },
+            {
+                path:'/MessageManage/MessageReply',
+                component:()=>import('@/views/MessageManage/MessageReply/index.vue'),
+                meta:{
+                    title:'留言回复'
+                }
+            }
+        ],
+        meta:{
+            title:'留言管理',
+            hidden:false
+        }
     }
+    
 ]
 
-
-
-const router = createRouter({
+ const router = createRouter({
     history:createWebHistory(import.meta.env.BASE_URL),
     routes,
     linkActiveClass:'active'
