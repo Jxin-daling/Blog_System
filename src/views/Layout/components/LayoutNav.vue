@@ -3,24 +3,19 @@
         <el-row class="nav">
             <el-col :span="2">logo</el-col>
             <el-col :span="2" @click="down" class="downarrow">⬇</el-col>
-            <el-col v-for="(item,index) in list" :key="index" :span="4" class="nav_active">
-                <router-link :to="`${item.path}`">{{ item.pathname }}</router-link>
-            </el-col>
-        </el-row>
+            <template v-for="(item,index) in routerlist.webroutes" :key="index" >
+                <el-col :span="4" class="nav_active" v-if="!item.meta.hidden">
+                    <router-link :to="`${item.path}`">{{ item.meta.title }}</router-link>
+                </el-col>
+            </template>
+            </el-row>
     </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import routerStore from "@/stores/routerStore";
 const emit = defineEmits(['changehandler'])
-
-const list = ref([
-    {path:'/home',pathname:'主页'},
-    {path:'/category',pathname:'分类'},
-    {path:'/gallery',pathname:'画廊'},
-    {path:'/message',pathname:'留言'},
-    {path:'/about',pathname:'关于'}
-])
+const routerlist = routerStore()
 
 const down = ()=>{
     emit('changehandler')
