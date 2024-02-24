@@ -22,7 +22,6 @@ import LayoutStartVue from './components/LayoutStart.vue';
 const isshow = ref(true)
 const changeshow = ()=>{
     isshow.value = !isshow.value
-    console.log("事件触发",isshow.value);
 }
 </script>
 
@@ -52,7 +51,7 @@ const changeshow = ()=>{
     .start-leave-active,
     .main-enter-active,
     .main-leave-active{
-        transition: all 2s ease;
+        transition: all 0.8s ease;
     }
 
     .main{
