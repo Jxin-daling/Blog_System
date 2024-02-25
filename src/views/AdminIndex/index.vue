@@ -24,11 +24,11 @@
                 </el-card>
             </el-col>
 
-            <el-col :span="12">
-                <div ref="myechartsA" style="width: 500px; height: 500px; border: 1px solid red;"></div>
+            <el-col :span="24">
+                <div ref="myechartsA" style="width: 100%; height: 500px;"></div>
             </el-col>
-            <el-col :span="12">
-                <div ref="myechartsB" style="width: 500px; height: 500px; border: 1px solid red;"></div>
+            <el-col :span="24">
+                <div ref="myechartsB" style="width: 100%; height: 500px; border-top: 2px solid black;"></div>
             </el-col>
         </el-row>
     </div>
