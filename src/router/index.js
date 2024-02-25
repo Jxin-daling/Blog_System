@@ -87,6 +87,7 @@ export const routes = [
     {
         path:'/ArticleManage',
         component:()=>import('@/views/Admin/index.vue'),
+        redirect:'/ArticleManage/ArticleInfo',
         children:[
             {
                 path:'/ArticleManage/ArticleInfo',
@@ -141,6 +142,7 @@ export const routes = [
     {
         path:'/MessageManage',
         component:()=>import('@/views/Admin/index.vue'),
+        redirect:'/MessageManage/MessageVisitor',
         children:[
             {
                 path:'/MessageManage/MessageVisitor',
