@@ -5,6 +5,7 @@
                 {{ item.meta?.title }}
             </template>
         </el-menu-item>
+        
         <el-menu-item v-if="item.children&&item.children.length==1" :index="item.path" @click="goRoute">
             <template #title>
                 {{ item.meta?.title }}
@@ -21,10 +22,11 @@
 </template>
 
 <script setup>
-import router from '@/router';
+// import router from '@/router';
+import { useRouter } from 'vue-router';
+const router = useRouter()
 defineProps(['routerlist'])
 const goRoute = (vc)=>{
-    console.log(vc.index);
     router.push(vc.index)
 }
 </script>
