@@ -13,12 +13,13 @@ import { createPinia } from 'pinia'
 const pinia = createPinia()
 app.use(pinia)
 
-// pinia持久化插件引入
-import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
-pinia.use(piniaPluginPersistedstate)
-
 // 路由引入
 import router from '@/router/index'
 app.use(router)
+
+// 文本编辑器插件
+import ElementTiptapPlugin from 'element-tiptap-vue3-fixed';
+import 'element-tiptap-vue3-fixed/lib/style.css';
+app.use(ElementTiptapPlugin);
 
 app.mount('#app')
