@@ -1,14 +1,14 @@
 <template>
     <div class="container_admin">
-        <el-row>
-            <el-col :span="5">
-                <MenuSlider/>
-            </el-col>
-            <el-col :span="19">
-                <MenuNav/>
-                <AdminMain/>
-            </el-col>
-        </el-row>
+        <div class="admin_slider">
+            <MenuSlider/>
+        </div>
+        <div class="admin_tabbar">
+            <MenuNav/>
+        </div>
+        <div class="admin_main">
+            <AdminMain/>
+        </div>
     </div>
 </template>
 
@@ -22,9 +22,30 @@ import MenuNav from './components/AdminNav.vue';
 
 <style lang="scss">
 .container_admin{
-    width: 100vw;
+    width: 100%;
     height: 100vh;
-    background-color:gray;
-    overflow: hidden;
+
+    .admin_slider{
+        width: 20vw;
+        background-color: black;
+        height: 100vh;
+    }
+
+    .admin_tabbar{
+        width: calc(100% - 20vw);
+        height: 7vh;
+        position: fixed;
+        left: 20vw;
+        top: 0;
+    }
+
+    .admin_main{
+        width: calc(100% - 20vw);
+        height: calc(100vh - 7vh);
+        position: absolute;
+        left: 20vw;
+        top: 7vh;
+        overflow: scroll;
+    }
 }
 </style>
