@@ -74,12 +74,9 @@ const dialogFormVisibleB = ref(false)
 
 // 数据存储
 const categoryArr = ref([])
-// 总条数
-const total = ref()
 
 // 表格数据
 categoryArr.value = categorystore.categorylist.msg
-total.value = categorystore.categorylist.total
 
 // 图片上传
 let file = ref()
@@ -98,12 +95,6 @@ const changehandle =function(e){
         urllist.value.splice(limit.value)  //限制展示数量
     }
   }
-}
-
-const confirmB = ()=>{
-    const {cid} = categoryForm.value
-    dialogFormVisibleB.value = false
-    postCategoryPicApi(cid,file.value)
 }
 
 // 修改图片名称
@@ -128,7 +119,7 @@ const cancel = ()=>{
     dialogFormVisibleB.value = false
 }
 
-// 准备表单对象h
+// 准备表单对象
 const categoryForm = ref({
     cid:'',
     categoryname:'',
@@ -148,22 +139,25 @@ const formRef = ref()
 // 添加图片
 const addPic = ()=>{
     categoryForm.value.cid = ''
-    console.log("cid是",categoryForm.cid);
     dialogFormVisibleA.value = true
 }
 
-// 提交数据
+// 提交图片名称数据
 const confirmA = async()=>{
     dialogFormVisibleA.value = true
-    console.log(categoryForm.value);
     formRef.value.validate(async(valid)=>{
         if(valid){
-            postCategoryApi(categoryForm.value).then(res=>{
-                console.log(res.msg);
-            })
+            postCategoryApi(categoryForm.value)
             dialogFormVisibleA.value = false
         }
     })
+}
+
+// 提交图片数据
+const confirmB = ()=>{
+    const {cid} = categoryForm.value
+    dialogFormVisibleB.value = false
+    postCategoryPicApi(cid,file.value)
 }
 
 // 执行删除操作
