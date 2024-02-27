@@ -1,7 +1,7 @@
 <template>
     <div class="container_nav">
         <el-row class="nav">
-            <el-col :span="2">logo</el-col>
+            <el-col :span="2" style="padding-left:20px;"><h3 style="display:inline-block;">J</h3><span>xin</span></el-col>
             <el-col :span="2" @click="down" class="downarrow">⬇</el-col>
             <template v-for="(item,index) in routerlist.webroutes" :key="index" >
                 <el-col :span="4" class="nav_active" v-if="!item.meta.hidden">
@@ -80,4 +80,4 @@ const down = ()=>{
         }
     }
 }
-</style>
+</style>@/stores/router@/stores/routerStore
