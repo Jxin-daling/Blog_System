@@ -7,26 +7,39 @@
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
+    <div class="nav_right">
+      <el-button :icon="Refresh" circle @click="updateRefresh"></el-button>
+    </div>
   </div>  
 </template>
 
 <script setup>
 import {Refresh,ArrowRight} from '@element-plus/icons-vue'
 import { useRoute } from 'vue-router';
+import useSettingStore from '@/stores/setting';
+const settingstore = useSettingStore()
 const route = useRoute()
+
+const updateRefresh = ()=>{
+  settingstore.refresh = !settingstore.refresh
+}
 </script>
 
 <style lang="scss">
 .admin_nav{
-  width: calc(100% - 20vw);
-  height: 7vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: space-between;
 
   .nav_left{
     display: flex;
-    align-items: center;
     margin-left: 20px;
+    margin-top: 10px;
+  }
+
+  .nav_right{
+    margin-right: 20px;
   }
 }
 </style>
