@@ -24,4 +24,4 @@ const routerlist = routerStore()
 .slider_container{
   height: 100vh;
 }
-</style>
+</style>@/stores/router@/stores/routerStore
