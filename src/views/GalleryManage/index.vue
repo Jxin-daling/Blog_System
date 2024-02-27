@@ -22,26 +22,10 @@
                 </template>
             </el-table-column>
         </el-table>    
-
-         <!-- 
-            current-page:当前页码
-            page-sizes：每页展示多少条数据
-        -->
-        <el-pagination
-            v-model:current-page="currentPage"
-            v-model:page-size="pageSize"   
-            :page-sizes="[3, 5, 7, 9]"
-            :disabled="disabled"
-            background 
-            layout="prev, pager, next, jumper,   sizes, total"
-            :total="total"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-        />
     </el-card>
 
     <!-- 对话框 -->
-    <el-dialog v-model="dialogFormVisibleA" :title="picForm.pid?'修改图片名称':'添加图片名称'" width="500">
+    <el-dialog v-model="dialogFormVisibleA" :title="picForm.pid?'修改图片名称':'添加图片'" width="500">
         <el-form
             :model="picForm"
             :rules="rules"
@@ -86,10 +70,6 @@ const gallerystore = useGalleryStore()
 
 const dialogFormVisibleA = ref(false)
 const dialogFormVisibleB = ref(false)
-// 当前页码
-const currentPage = ref(1)
-// 一页展示数据数
-const pageSize = ref(3)
 
 // 数据存储
 const galleryArr = ref([])
@@ -99,10 +79,6 @@ const total = ref()
 // 表格数据
 galleryArr.value = gallerystore.gallerylist.msg
 total.value = gallerystore.gallerylist.total
-
-const handleCurrentChange = (a)=>{
-    console.log("分页change",a);
-}
 
 // 图片上传
 let file = ref()
@@ -124,12 +100,10 @@ const changehandle =function(e){
 }
 
 const confirmB = ()=>{
-    console.log(picForm.value.pid);
     const {pid} = picForm.value
     dialogFormVisibleB.value = false
     postGalleryPicApi(pid,file.value)
 }
-
 
 // 修改图片名称
 const updatePicName = (row)=>{
@@ -146,7 +120,6 @@ const updatePic = (row)=>{
     picForm.value.imgname = row.imgname
     picForm.value.imgurl = row.imgurl
 }
-
 
 // 取消操作
 const cancel = ()=>{
@@ -172,10 +145,10 @@ const formRef = ref()
 
 // 添加图片
 const addPic = ()=>{
-    picForm.pid = ''
+    picForm.value.pid = ''
+    console.log("pid是",picForm.pid);
     dialogFormVisibleA.value = true
 }
-
 
 // 提交数据
 const confirmA = async()=>{
