@@ -1,20 +1,21 @@
 <template>
     <el-card>
-        <el-button type="primary" :icon="Plus" @click="addCategory">添加分类</el-button>
+        <el-button type="primary" :icon="Plus" @click="addPic">添加分类</el-button>
 
-        <el-table :data="CategoryArr" style="width: 100%;margin:10px 0;" border empty-text="没有数据">
+        <el-table :data="categoryArr" style="width: 100%;margin:10px 0;" border empty-text="没有数据">
             <el-table-column type="index" label="序号" width="80"></el-table-column>
-            <el-table-column prop="name" label="分类名称" width="200"></el-table-column>
-            <el-table-column label="分类缩略图">
+            <el-table-column prop="categoryname" label="名称" width="200"></el-table-column>
+            <el-table-column label="图片">
                 <template #={row}>
-                    <img :src="row.imgurl" alt="未有分类" width="100px" height="100px"> 
+                    <img :src="row.imgurl" alt="未有图片" width="100px" height="100px"> 
                 </template>
             </el-table-column>
-            <el-table-column prop="ariclesize" label="分类文章数" width="200"></el-table-column>
-            <el-table-column prop="address" label="操作" width="180">
+            <el-table-column label="文章总数" prop="aclcount"></el-table-column>
+            <el-table-column prop="address" label="操作" width="200">
                 <template #={row}>
-                    <el-button type="primary" :icon="Edit" @click="updateCategory(row)"></el-button>
-                    <el-popconfirm :title="`确定删除${row.name}?`" @confirm="removeCategory(row.id)" @cancel="cancel">
+                    <el-button type="primary" :icon="Edit" @click="updatePicName(row)"></el-button>
+                    <el-button type="primary" :icon="FolderAdd" @click="updatePic(row)"></el-button>
+                    <el-popconfirm :title="`确定删除${row.categoryname}?`" @confirm="removePic(row)" @cancel="cancel">
                         <template #reference>
                             <el-button type="danger" :icon="Delete"></el-button>
                         </template>
@@ -22,109 +23,158 @@
                 </template>
             </el-table-column>
         </el-table>    
-
-         <!-- 
-            current-page:当前页码
-            page-sizes：每页展示多少条数据
-        -->
-        <el-pagination
-            v-model:current-page="currentPage"
-            v-model:page-size="pageSize"   
-            :page-sizes="[3, 5, 7, 9]"
-            :disabled="disabled"
-            background 
-            layout="prev, pager, next, jumper,   sizes, total"
-            :total="total"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-        />
     </el-card>
 
     <!-- 对话框 -->
-    <el-dialog v-model="dialogFormVisible" :title="Categoryinfo.id?'修改分类':'添加分类'" width="500">
-        <el-form style="width: 90%;">
-            <el-form-item label="分类名称">
-                <el-input placeholder="请输入分类名称" v-model="Categoryinfo.imgname"></el-input>
-            </el-form-item>
-            <el-form-item label="分类" v-model="Categoryinfo.imgurl">
-                <img :src="Categoryinfo.imgurl" alt="" width="100px" height="100px">
+    <el-dialog v-model="dialogFormVisibleA" :title="categoryForm.cid?'修改分类名称':'添加分类'" width="500">
+        <el-form
+            :model="categoryForm"
+            :rules="rules"
+            ref="formRef"
+        >
+            <el-form-item label="分类名称" prop="categoryname">
+                <el-input  type="text" v-model="categoryForm.categoryname" placeholder="请输入分类名称"/>
             </el-form-item>
         </el-form>
 
         <template #footer>
             <el-button @click="cancel">取消</el-button>
-            <el-button type="primary" @click="confirm">确定</el-button>
+            <el-button type="primary" @click="confirmA">确定</el-button>
+        </template>
+    </el-dialog>
+
+    <el-dialog v-model="dialogFormVisibleB" :title="categoryForm.imgurl?'修改分类图片':'添加分类图片'" width="500">
+        <form enctype="multipart/form-data" method="post">
+            <input type="file" name="myfile" @change="changehandle($event)" id="myfile" accept="image/*" style="display: none;" >
+        </form>
+        <label for="myfile">
+            <img src="../../assets/camera.png" alt="">
+        </label>
+        <li v-for="(item,index) in urllist" :key="index">
+            <img :src="item" alt="" width="100px" height="100px">
+        </li>
+
+        <template #footer>
+            <el-button @click="cancel">取消</el-button>
+            <el-button type="primary" @click="confirmB(row)">确定</el-button>
         </template>
     </el-dialog>
 </template>
 
 <script setup>
 import { Plus } from '@element-plus/icons-vue';
-import { reactive, ref } from 'vue';
-import { Edit,Delete } from '@element-plus/icons-vue';
-const dialogFormVisible = ref(false)
-// 当前页码
-const currentPage = ref(1)
-// 一页展示数据数
-const pageSize = ref(3)
+import { onMounted, reactive, ref } from 'vue';
+import { Edit,Delete,FolderAdd } from '@element-plus/icons-vue';
+import { postCategoryApi,delCategoryApi,postCategoryPicApi } from '@/apis/category'
+import { useCategoryStore } from '@/stores/category'
+const categorystore = useCategoryStore()
+
+const dialogFormVisibleA = ref(false)
+const dialogFormVisibleB = ref(false)
 
 // 数据存储
-const CategoryArr = ref([])
+const categoryArr = ref([])
 // 总条数
 const total = ref()
 
-// 模拟数据
-const categoryinfo = {
-    data:[
-        {id:13,name:"fuzi",imgurl:'../../../public/fuzi.jpg',ariclesize:22},
-        {id:32,name:"nep",imgurl:'../../../public/nep.png',ariclesize:44},
-        {id:31,name:"nep",imgurl:'../../../public/nep2.png',ariclesize:42},
-    ],
-    status:200,
-    total:200,
-    msg:"OK"
+// 表格数据
+categoryArr.value = categorystore.categorylist.msg
+total.value = categorystore.categorylist.total
+
+// 图片上传
+let file = ref()
+let urllist = ref([])
+let n = ref(0)
+let limit = ref(1)
+
+const changehandle =function(e){
+  file.value = e.target.files
+  urllist.value = []
+  n.value = 0
+  if(n.value <= limit.value){
+    for(let i = 0; i < file.value.length; i++){
+        let picurl = window.URL.createObjectURL(file.value[i])
+        urllist.value.push(picurl)
+        urllist.value.splice(limit.value)  //限制展示数量
+    }
+  }
 }
 
-CategoryArr.value = categoryinfo.data
-total.value = categoryinfo.total
-
-const handleCurrentChange = (a)=>{
-    console.log("分页change",a);
+const confirmB = ()=>{
+    const {cid} = categoryForm.value
+    dialogFormVisibleB.value = false
+    postCategoryPicApi(cid,file.value)
 }
 
-const Categoryinfo = reactive({
-    id:'',
-    imgname:'',
+// 修改图片名称
+const updatePicName = (row)=>{
+    dialogFormVisibleA.value = true
+    categoryForm.value.cid = row.cid
+    categoryForm.value.categoryname = row.categoryname
+    categoryForm.value.imgurl = row.imgurl
+}
+
+// 修改图片
+const updatePic = (row)=>{
+    dialogFormVisibleB.value = true
+    categoryForm.value.cid = row.cid
+    categoryForm.value.categoryname = row.categoryname
+    categoryForm.value.imgurl = row.imgurl
+}
+
+// 取消操作
+const cancel = ()=>{
+    dialogFormVisibleA.value = false
+    dialogFormVisibleB.value = false
+}
+
+// 准备表单对象h
+const categoryForm = ref({
+    cid:'',
+    categoryname:'',
+    aclcount:0,
     imgurl:''
 })
 
-// 添加分类
-const addCategory = ()=>{
-    Categoryinfo.id = ''
-    dialogFormVisible.value = true
+// 校验规则 
+const rules = reactive({
+    categoryname:[
+        {required:true, message:'图片名称不能为空', trigger:'blur'}
+    ]
+})
+
+const formRef = ref()
+
+// 添加图片
+const addPic = ()=>{
+    categoryForm.value.cid = ''
+    console.log("cid是",categoryForm.cid);
+    dialogFormVisibleA.value = true
 }
 
-// 修改分类
-const updateCategory = (row)=>{
-    Categoryinfo.id = row.id
-    Categoryinfo.imgname = row.name
-    Categoryinfo.imgurl = row.imgurl
-    console.log(categoryinfo.imgurl);
-    dialogFormVisible.value = true
+// 提交数据
+const confirmA = async()=>{
+    dialogFormVisibleA.value = true
+    console.log(categoryForm.value);
+    formRef.value.validate(async(valid)=>{
+        if(valid){
+            postCategoryApi(categoryForm.value).then(res=>{
+                console.log(res.msg);
+            })
+            dialogFormVisibleA.value = false
+        }
+    })
 }
 
-const cancel = ()=>{
-    dialogFormVisible.value = false
+// 执行删除操作
+const removePic = (row)=>{
+    const {cid} = row
+    delCategoryApi({cid})
 }
 
-const confirm = ()=>{
-    dialogFormVisible.value = false
-}
-
-// 执行删除分类
-const removeCategory = (cid)=>{
-    console.log(cid);
-}
+onMounted(()=>{
+    categorystore.getcategory()
+})
 </script>
 
 <style>
