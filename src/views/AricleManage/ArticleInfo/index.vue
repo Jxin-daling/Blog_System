@@ -2,17 +2,19 @@
     <el-card>
         <el-table :data="aclArr" style="width: 100%;margin:10px 0;" border empty-text="没有数据">
             <el-table-column type="index" label="序号" width="60"></el-table-column>
-            <el-table-column prop="name" label="文章标题" width="200"></el-table-column>
-            <el-table-column label="文章配图">
+            <el-table-column prop="title" label="文章标题" width="100"></el-table-column>
+            <el-table-column label="文章标图" width="150">
                 <template #={row}>
-                    <img :src="row.imgurl" alt="未有文章" width="100px" height="100px"> 
+                    <img :src="row.bannerimgurl" alt="未有图片" width="100px" height="100px"> 
                 </template>
             </el-table-column>
-            <el-table-column label="文章内容" prop="msg"></el-table-column>
-            <el-table-column prop="address" label="操作" width="130">
+            <el-table-column label="文章内容" prop="content" width="200"></el-table-column>
+            <el-table-column label="文章分类" prop="category" width="100"></el-table-column>
+            <el-table-column prop="address" label="操作" width="200">
                 <template #={row}>
                     <el-button type="primary" :icon="Edit" @click="updateAcl(row)"></el-button>
-                    <el-popconfirm :title="`确定删除${row.name}?`" @confirm="removeAcl(row.id)" @cancel="cancel">
+                    <el-button type="primary" :icon="FolderAdd" @click="updatePic(row)"></el-button>
+                    <el-popconfirm :title="`确定删除${row.title}?`" @confirm="removeAcl(row)" @cancel="cancel">
                         <template #reference>
                             <el-button type="danger" :icon="Delete"></el-button>
                         </template>
@@ -20,106 +22,159 @@
                 </template>
             </el-table-column>
         </el-table>    
-
-         <!-- 
-            current-page:当前页码
-            page-sizes：每页展示多少条数据
-        -->
-        <el-pagination
-            v-model:current-page="currentPage"
-            v-model:page-size="pageSize"   
-            :page-sizes="[3, 5, 7, 9]"
-            :disabled="disabled"
-            background 
-            layout="prev, pager, next, jumper,   sizes, total"
-            :total="total"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-        />
     </el-card>
 
     <!-- 对话框 -->
-    <el-dialog v-model="dialogFormVisible" :title="textinfo.id?'修改文章':'添加文章'" width="500">
-        <el-form style="width: 90%;">
+    <el-dialog v-model="dialogFormVisibleA" :title="articleForm.aid?'修改文章':'添加文章'" width="500">
+        <el-form style="width: 90%;"
+            :model="articleForm"
+            :rules="rules"
+            ref="formRef"
+        >
             <el-form-item label="文章名称">
-                <el-input placeholder="请输入文章名称" v-model="textinfo.imgname"></el-input>
+                <el-input placeholder="请输入文章名称" v-model="articleForm.title"></el-input>
             </el-form-item>
             <el-form-item label="文章内容">
-                <el-input placeholder="请输入文章内容" v-model="textinfo.text" type="textarea"></el-input>
-            </el-form-item>
-            <el-form-item label="文章配图" v-model="textinfo.imgurl">
-                <img :src="textinfo.imgurl" alt="" width="100px" height="100px">
+                <el-input placeholder="请输入文章内容" v-model="articleForm.content" type="textarea"></el-input>
             </el-form-item>
         </el-form>
 
         <template #footer>
             <el-button @click="cancel">取消</el-button>
-            <el-button type="primary" @click="confirm">确定</el-button>
+            <el-button type="primary" @click="confirmA">确定</el-button>
+        </template>
+    </el-dialog>
+
+
+    <el-dialog v-model="dialogFormVisibleB" :title="articleForm.bannerimgurl?'修改文章图片':'添加文章图片'" width="500">
+        <form enctype="multipart/form-data" method="post">
+            <input type="file" name="myfile" @change="changehandle($event)" id="myfile" accept="image/*" style="display: none;">
+        </form>
+        <label for="myfile">
+            <img src="../../../assets/camera.png" alt="">
+        </label>
+        <li v-for="(item,index) in urllist" :key="index">
+            <img :src="item" alt="" width="100px" height="100px">
+        </li>
+
+        <template #footer>
+            <el-button @click="cancel">取消</el-button>
+            <el-button type="primary" @click="confirmB(row)">确定</el-button>
         </template>
     </el-dialog>
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue';
-import { Edit,Delete } from '@element-plus/icons-vue';
-const dialogFormVisible = ref(false)
-// 当前页码
-const currentPage = ref(1)
-// 一页展示数据数
-const pageSize = ref(3)
+import { onMounted, reactive, ref } from 'vue';
+import { postArticlePicApi,delArticleApi,postArticleApi } from '@/apis/article'
+import { Edit,Delete,FolderAdd } from '@element-plus/icons-vue';
+import { useArticleStore } from '@/stores/article'
+const articlestore = useArticleStore()
+
+const dialogFormVisibleA = ref(false)
+const dialogFormVisibleB = ref(false)
 
 // 数据存储
 const aclArr = ref([])
-// 总条数
-const total = ref()
 
-// 模拟数据
-const aclinfo = {
-    data:[
-        {id:13,name:"fuzi",imgurl:'../../../public/fuzi.jpg',msg:"sdadasddsad1wwdqsdadasddsad1wwdqsdadasddsad1wwdqsdadasddsad1wwdqsdadasddsad1wwdqsdadasddsad1wwdqsdadasddsad1wwdqsdadasddsad1wwdq"},
-        {id:32,name:"nep",imgurl:'../../../public/nep.png',msg:"sdadasddsad1wwdqsdadasddsad1wwdqsdadasddsad1wwdqsdadasddsad1wwdqsdadasddsad1wwdqsdadasddsad1wwdqsdadasddsad1wwdqsdadasddsad1wwdq"},
-        {id:31,name:"nep",imgurl:'../../../public/nep2.png',msg:"sdadasddsad1wwdqsdadasddsad1wwdqsdadasddsad1wwdqsdadasddsad1wwdqsdadasddsad1wwdqsdadasddsad1wwdqsdadasddsad1wwdqsdadasddsad1wwdq"},
+// 表格数据
+aclArr.value = articlestore.articlelist.msg
+const formRef = ref()
+
+const articleForm = ref({
+    aid:0,
+    title:'',
+    content:'',
+    bannerimgurl:'',
+    category:'',
+    createtime:''
+})
+
+// 校验规则
+const rules = reactive({
+    title:[
+        {required:true, message:'文章标题不能为空', trigger:'blur'}
     ],
-    status:200,
-    total:200,
-    msg:"OK"
-}
-
-aclArr.value = aclinfo.data
-total.value = aclinfo.total
-
-const handleCurrentChange = (a)=>{
-    console.log("分页change",a);
-}
-
-const textinfo = reactive({
-    id:'',
-    imgname:'',
-    imgurl:'',
-    text:''
+    content:[
+        {required:true, message:'文章内容不能为空', trigger:'blur'}
+    ]
+    
 })
 
 // 修改文章
 const updateAcl = (row)=>{
-    textinfo.id = row.id
-    textinfo.imgname = row.name
-    textinfo.imgurl = row.imgurl
-    textinfo.text = row.msg
-    dialogFormVisible.value = true
+    console.log(row);
+    articleForm.value.aid = row.aid
+    articleForm.value.title = row.title
+    articleForm.value.content = row.content
+    articleForm.value.bannerimgurl = row.bannerimgurl
+    articleForm.value.category = row.category
+    articleForm.value.createtime = row.createtime
+    dialogFormVisibleA.value = true
+}
+
+// 提交修改文章数据
+const confirmA = async()=>{
+    dialogFormVisibleA.value = true
+    formRef.value.validate(async(valid)=>{
+        if(valid){
+            postArticleApi(articleForm.value)
+            dialogFormVisibleA.value = false
+        }
+    })
 }
 
 const cancel = ()=>{
-    dialogFormVisible.value = false
+    dialogFormVisibleA.value = false
 }
 
-const confirm = ()=>{
-    dialogFormVisible.value = false
+// 添加/更新文章配图的对话框
+const updatePic = (row)=>{
+    dialogFormVisibleB.value = true
+    articleForm.value.aid = row.aid
+    articleForm.value.bannerimgurl = row.bannerimgurl
 }
+
+// 图片上传
+let file = ref()
+let urllist = ref([])
+let n = ref(0)
+let limit = ref(1)
+
+const changehandle =function(e){
+  file.value = e.target.files
+  urllist.value = []
+  n.value = 0
+  if(n.value <= limit.value){
+    for(let i = 0; i < file.value.length; i++){
+        let picurl = window.URL.createObjectURL(file.value[i])
+        urllist.value.push(picurl)
+        urllist.value.splice(limit.value)  //限制展示数量
+    }
+  }
+}
+
+// 确认添加/更新文章配图
+const confirmB = ()=>{
+    const {aid} = articleForm.value
+    dialogFormVisibleB.value = false
+    console.log(aid);
+    postArticlePicApi(aid,file.value).then(res=>{
+        console.log(res);
+    })
+    console.log("post ok");
+}
+
 
 // 执行删除文章
-const removeAcl = (pid)=>{
-    console.log(pid);
+const removeAcl = (row)=>{
+    const {aid} = row
+    delArticleApi({aid})
 }
+
+onMounted(()=>{
+    articlestore.getarticle()
+})
 </script>
 
 <style>
