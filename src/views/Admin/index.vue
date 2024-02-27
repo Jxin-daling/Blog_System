@@ -33,7 +33,7 @@ import MenuNav from './components/AdminNav.vue';
 
     .admin_tabbar{
         width: calc(100% - 20vw);
-        height: 7vh;
+        height: 15vh;
         position: fixed;
         left: 20vw;
         top: 0;
