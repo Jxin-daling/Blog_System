@@ -47,7 +47,7 @@
             <input type="file" name="myfile" @change="changehandle($event)" id="myfile" accept="image/*" style="display: none;" >
         </form>
         <label for="myfile">
-            <img src="../../assets/camera.png" alt="">
+            <img src="../../../public/camera.png" alt="">
         </label>
         <li v-for="(item,index) in urllist" :key="index">
             <img :src="item" alt="" width="100px" height="100px">
