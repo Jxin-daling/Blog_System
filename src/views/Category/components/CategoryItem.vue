@@ -1,30 +1,22 @@
 <template>
     <div class="container">
         <div class="container_category">
-            <el-card v-for="(item,index) in categorylist" :key="index" class="card">
-                <div class="card_show">
-                    <img :src="item.imgurl" class="image">
-                    <div class="card_tag">日常</div>
-                </div>
-                <div class="card_content">共有<span>33</span>篇文章</div>
-            </el-card>
+            <router-link :to="`/categoryitem/`+item.categoryname" v-for="(item,index) in categorystore.categorylist.msg" :key="index">
+                <el-card class="card">
+                    <div class="card_show">
+                        <img :src="item.imgurl" class="image">
+                        <div class="card_tag">{{ item.categoryname }}</div>
+                    </div>
+                    <div class="card_content">共有<span>{{ item.aclcount }}</span>篇文章</div>
+                </el-card>
+            </router-link>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
-
-const categorylist = ref([
-    {imgurl:'../../../../public/bg1.png',name:'jump'},
-    {imgurl:'../../../../public/bg2.jpg',name:'day'},
-    {imgurl:'../../../../public/bg3.jpg',name:'daofeng'},
-    {imgurl:'../../../../public/bg4.jpg',name:'nep'},
-    {imgurl:'../../../../public/bg1.png',name:'jump'},
-    {imgurl:'../../../../public/bg2.jpg',name:'day'},
-    {imgurl:'../../../../public/bg3.jpg',name:'daofeng'},
-    {imgurl:'../../../../public/bg4.jpg',name:'nep'},
-])
+import { useCategoryStore } from '@/stores/category';
+const categorystore = useCategoryStore()
 </script>
 
 <style lang="scss">

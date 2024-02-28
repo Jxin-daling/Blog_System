@@ -78,7 +78,7 @@ const dialogFormVisibleB = ref(false)
 const aclArr = ref([])
 
 // 表格数据
-aclArr.value = articlestore.articlelist.msg
+aclArr.value = articlestore.articlelist
 const formRef = ref()
 
 const articleForm = ref({
@@ -103,7 +103,6 @@ const rules = reactive({
 
 // 修改文章
 const updateAcl = (row)=>{
-    console.log(row);
     articleForm.value.aid = row.aid
     articleForm.value.title = row.title
     articleForm.value.content = row.content
@@ -158,18 +157,15 @@ const changehandle =function(e){
 const confirmB = ()=>{
     const {aid} = articleForm.value
     dialogFormVisibleB.value = false
-    console.log(aid);
     postArticlePicApi(aid,file.value).then(res=>{
-        console.log(res);
     })
-    console.log("post ok");
 }
 
 
 // 执行删除文章
 const removeAcl = (row)=>{
-    const {aid} = row
-    delArticleApi({aid})
+    const {aid,cid} = row
+    delArticleApi({aid,cid})
 }
 
 onMounted(()=>{

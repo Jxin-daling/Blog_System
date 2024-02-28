@@ -12,14 +12,21 @@
           </el-col>
       </el-row>
     </div>
-  </template>
+</template>
   
-  <script setup>
-  import LeftItem from './components/LeftItem.vue';
-  import MidItem from './components/MidItem.vue';
-  import RightItem from './components/RightItem.vue';
-  </script>
-  
-  <style lang="scss">
-  
-  </style>
+<script setup>
+import LeftItem from './components/LeftItem.vue';
+import MidItem from './components/MidItem.vue';
+import RightItem from './components/RightItem.vue';
+import { useMessageStore } from '@/stores/message';
+const messagestore = useMessageStore()
+import { onMounted } from 'vue';
+onMounted(()=>{
+  messagestore.getmessagevisitor()
+  messagestore.getmessagereply()
+})
+</script>
+
+<style lang="scss">
+
+</style>

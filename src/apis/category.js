@@ -15,6 +15,13 @@ export const getCategoryApi = (params)=>{
     })
 }
 
+export const getCategoryListApi = (params)=>{
+    return httpServe({
+        url:'/api/getcategorylist',
+        params:params
+    })
+}
+
 export const delCategoryApi = (params)=>{
     return httpServe({
         url:'/api/delcategory',

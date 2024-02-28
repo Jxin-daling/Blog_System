@@ -1,14 +1,14 @@
 <template>
     <div class="container">
         <div class="container_pic">
-            <el-card v-for="(item,index) in piclist" :key="index" class="card">
+            <el-card v-for="(item,index) in gallerystore.gallerylist.msg" :key="index" class="card">
                 <img
                     :src="item.imgurl"
                     class="image"
                 />
                 <div style="padding: 14px">
-                    <span>{{ item.name }}</span>
-                    <el-button text class="button">like</el-button>
+                    <span>{{ item.imgname }}&nbsp;</span>
+                    <span>{{ item.create_time }}</span>
                 </div>
             </el-card>
         </div>
@@ -16,20 +16,8 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-let piclist = ref([
-    {imgurl:'../../../../public/bg1.png',name:'jump'},
-    {imgurl:'../../../../public/bg2.jpg',name:'day'},
-    {imgurl:'../../../../public/bg3.jpg',name:'daofeng'},
-    {imgurl:'../../../../public/bg4.jpg',name:'nep'},
-    {imgurl:'../../../../public/fuzi.jpg',name:'fuzi'},
-    {imgurl:'../../../../public/fuzi.jpg',name:'fuzi'},
-    {imgurl:'../../../../public/fuzi.jpg',name:'fuzi'},
-    {imgurl:'../../../../public/fuzi.jpg',name:'fuzi'},
-    {imgurl:'../../../../public/fuzi.jpg',name:'fuzi'},
-    {imgurl:'../../../../public/fuzi.jpg',name:'fuzi'},
-    {imgurl:'../../../../public/fuzi.jpg',name:'fuzi'},
-])
+import { useGalleryStore } from '@/stores/gallery';
+const gallerystore = useGalleryStore()
 </script>
 
 <style lang="scss">

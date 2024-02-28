@@ -1,8 +1,8 @@
 <template>
     <div class="container_message">
-        <el-descriptions v-for="item in messageinfo" :key="item" class="message_item">
-            <el-descriptions-item>回复 >>>{{ item.username }}--{{ item.uid }}</el-descriptions-item>
-            <el-descriptions-item label="回复时间">{{ item.date }}</el-descriptions-item>
+        <el-descriptions v-for="item in messageArr" :key="item" class="message_item">
+            <el-descriptions-item>回复 >>>{{ item.admin }}--{{ item.mvid }}</el-descriptions-item>
+            <el-descriptions-item label="回复时间">{{ item.create_time }}</el-descriptions-item>
             <el-descriptions-item>
                 <el-popconfirm :title="`确定删除?`" @confirm="remove(item)" @cancel="cancel">
                     <template #reference>
@@ -11,7 +11,7 @@
                     </el-popconfirm>
             </el-descriptions-item>
             <el-descriptions-item>
-                {{ item.msg }}
+                {{ item.content }}
             </el-descriptions-item>
         </el-descriptions>
     </div>
@@ -19,22 +19,24 @@
 
 <script setup>
 import { ChatDotRound, Delete } from '@element-plus/icons-vue';
-const messageinfo = [
-    {username:'匿名用户',msg:'写的不错啊',date:'2023-12-30',uid:1},
-    {username:'匿名用户',msg:'写的不错啊',date:'2023-12-30',uid:1},
-    {username:'匿名用户',msg:'写的不错啊',date:'2023-12-30',uid:1},
-    {username:'匿名用户',msg:'写的不错啊',date:'2023-12-30',uid:1},
-    {username:'匿名用户',msg:'写的不错啊',date:'2023-12-30',uid:1},
-    {username:'匿名用户',msg:'写的不错啊',date:'2023-12-30',uid:1},
-    {username:'匿名用户',msg:'写的不错啊',date:'2023-12-30',uid:1},
-    {username:'匿名用户',msg:'写的不错啊',date:'2023-12-30',uid:1},
-    {username:'匿名用户',msg:'写的不错啊',date:'2023-12-30',uid:1}
-]
+import { useMessageStore } from '@/stores/message';
+import { onMounted, ref } from 'vue';
+import { delReplyApi } from '@/apis/message'
+const messagestore = useMessageStore()
 
+// 回复数据 
+const messageArr = ref()
+messageArr.value = messagestore.messagereplylist
+
+// 删除回复
 const remove = (item)=>{
-    console.log(item);
-    console.log("删除喽");
+    const { mpid } = item
+    delReplyApi({mpid})
 }
+
+onMounted(()=>{
+    messagestore.getmessagereply()
+})
 </script>
 
 <style lang="scss">

@@ -146,7 +146,6 @@ const formRef = ref()
 // 添加图片
 const addPic = ()=>{
     picForm.value.pid = ''
-    console.log("pid是",picForm.pid);
     dialogFormVisibleA.value = true
 }
 
@@ -154,12 +153,12 @@ const addPic = ()=>{
 const confirmA = async()=>{
     dialogFormVisibleA.value = true
     formRef.value.validate(async(valid)=>{
-    if(valid){
-        postGalleryApi(picForm.value).then(res=>{
-        })
-        dialogFormVisibleA.value = false
-    }
-  })
+        if(valid){
+            postGalleryApi(picForm.value).then(res=>{
+            })
+            dialogFormVisibleA.value = false
+        }
+    })
 }
 
 // 执行删除操作

@@ -5,8 +5,8 @@
       :rules="rules"
       ref="formRef"
     >
-      <el-form-item prop="acltitle">
-        <el-input placeholder="请输入文章标题" v-model="aclForm.acltitle"/>
+      <el-form-item prop="title">
+        <el-input placeholder="请输入文章标题" v-model="aclForm.title"/>
       </el-form-item>  
     </el-form>
     
@@ -74,17 +74,15 @@ const content = ref(`
 
 // 表单数据
 const aclForm = ref({
-    aid:'',
-    acltitle:'',
-    aclcontent:content.value,
+    title:'',
+    content:content.value,
     cid:0,
     category:''
 })
 
 
 watch(()=>content.value,()=>{
-  // console.log("变了",content.value);
-  aclForm.value.aclcontent = content.value
+  aclForm.value.content = content.value
 })
 
 // 校验规则 
@@ -98,7 +96,6 @@ const formRef = ref()
 
 // 提交文章
 const confirm = ()=>{
-  console.log(aclForm.value);
   formRef.value.validate(async(valid)=>{
       if(valid){
         postArticleApi(aclForm.value)
@@ -106,10 +103,7 @@ const confirm = ()=>{
   })
 }
 
-// 
 const handlerchange = (val)=>{
-  console.log("分类变了",val[0]);
-  console.log("分类变了",val[1]);
   aclForm.value.cid = val[0]
   aclForm.value.category = val[1]
 }

@@ -6,8 +6,11 @@
                 src="../../../../public/fuzi.jpg"
                 @click="lalala"
             >
-            </el-avatar
-            >
+            </el-avatar>
+            <div class="box">
+                <div class="circle"></div>
+                <div class="square"></div>
+            </div>
         </div>
     </div>
 
@@ -49,12 +52,10 @@ import { ElNotification } from 'element-plus'
 const dialogVisible = ref(false)
 const n = ref(0)   //计数器
 const lalala = ()=>{
-    console.log(n.value);
     n.value++
     if(n.value > 4)  dialogVisible.value = true;
     setTimeout(() => {
         n.value = 0
-        console.log("定时器关闭");
     }, 2000);    
 }
 
@@ -74,14 +75,57 @@ const success = ()=>{
 <style lang="scss" >
 .container_avatar{
     display: flex;
+    height: 100%;
     justify-content: center;
     
     .avatar_box{
+        position: relative;
         height: 100%;
 
         .avatar{
-            width: 100px;
-            height: 100px;
+            position: absolute;
+            top: 80px;
+            left: -70px;
+            width: 150px;
+            height: 150px;
+            z-index: 2;
+        }
+
+        .box{
+            position: relative;
+            right: 100px;
+            top: 100px;
+
+            .circle{
+                width: 200px;
+                height: 200px;
+                background-color: white;
+                border-radius: 50%;
+                position: absolute;
+                top: 0;
+                border-bottom: 1px solid black;
+            }
+
+            .square{
+                width: 200px;
+                height: 80px;
+                background-color: white;
+                border-bottom: 1px solid black;
+                position: absolute;
+                top: 100px;
+            }
+        }
+
+        .box::before{
+            content: 'Jxin';
+            font-size: 30px;
+            text-align: center;
+            width: 200px;
+            height: 1px;
+            background-color: black;
+            position: absolute;
+            top: 130px;
+            z-index: 1;
         }
     }
 

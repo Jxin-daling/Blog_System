@@ -7,7 +7,7 @@
             <span></span>
             <span>欢迎来到我的博客~❤</span>
         </div>
-        <div class="uparrow" @click="up">上拉箭头</div>
+        <div class="uparrow" @click="up">⬆</div>
     </div>
 </template>
 
@@ -30,10 +30,10 @@ const up = ()=>{
     .uparrow{
         cursor: pointer;
         position: fixed;
-        bottom: 0vh;
+        bottom: -5vh;
         left: 50vw;
-        background-color: black;
-        color: white;
+        font-size: 60px;
+        color: lightcoral;
     }
 
     .start_box{

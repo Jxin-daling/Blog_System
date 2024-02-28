@@ -48,7 +48,14 @@ export const indexchildren = [
             title:'关于',
             hidden:false
         }
-    }
+    },
+    {
+        path:'categoryitem/:index',
+        component:()=>import('@/views/CategoryItem/index.vue'),
+        meta:{
+            hidden:false
+        }
+    },
 ]
 
 export const routes = [
@@ -61,9 +68,17 @@ export const routes = [
             hidden:true
         }
     },
+    {
+        path:'/detail/:aid',
+        component:()=>import('@/views/Detail/index.vue'),
+        meta:{
+            title:'详情',
+            hidden:true
+        }
+    },
     // 后台路由
     {
-        path:'/Admin',
+        path:'/Jxin',
         meta:{
             hidden:true
         },
@@ -163,7 +178,15 @@ export const routes = [
             title:'留言管理',
             hidden:false
         }
-    }
+    },
+    {
+        name:'error',
+        path:'/:pathMatch(.*)*',
+        component:()=>import('@/views/TheTip/Error.vue'),
+        meta:{
+            title:'走丢了'
+        }
+    },
     
 ]
 
@@ -173,4 +196,10 @@ export const routes = [
     linkActiveClass:'active'
 })
 
+router.beforeEach((to, from, next) => {
+    if (to.meta.title) {
+        document.title = to.meta.title
+    }
+    next()
+})
 export default router
