@@ -5,7 +5,7 @@
             <el-col :span="2" @click="down" class="downarrow">⬇</el-col>
             <template v-for="(item,index) in routerlist.webroutes" :key="index" >
                 <el-col :span="4" class="nav_active" v-if="!item.meta.hidden">
-                    <router-link :to="`${item.path}`">{{ item.meta.title }}</router-link>
+                    <router-link :to="`/`+item.path">{{ item.meta.title }}</router-link>
                 </el-col>
             </template>
             </el-row>
