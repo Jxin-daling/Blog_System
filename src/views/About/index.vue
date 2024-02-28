@@ -42,6 +42,8 @@
     .card_about{
         width: 80%;
         height: 100%;
+        background: url('../../../public/bg4.jpg');
+        background-size: contain;
 
         a{
             text-decoration: underline;
@@ -57,6 +59,8 @@
         .about_content{
             
             .last,.now,.after{
+                font-size: 20px;
+                color: red;
                 margin-bottom: 30px;
             }
         }
