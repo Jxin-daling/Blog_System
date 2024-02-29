@@ -35,8 +35,6 @@ onMounted(()=>{
 
 <style lang="scss">
 .container_detail{
-  background: url('../../../public/bg2.jpg');
-  background-size: cover;
   display: flex;
   justify-content: center;
   height: 100vh;
