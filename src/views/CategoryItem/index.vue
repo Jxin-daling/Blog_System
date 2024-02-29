@@ -87,4 +87,8 @@ onMounted(()=>{
         text-align: center;
     }
 }
+
+.home_container_mid::-webkit-scrollbar{
+    display: none;
+}
 </style>

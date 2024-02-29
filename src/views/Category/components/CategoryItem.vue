@@ -21,12 +21,14 @@ const categorystore = useCategoryStore()
 
 <style lang="scss">
 .container_category{
+    height: 100vh;
     background: rgba(1,1,1,0.3);
     border-radius: 20px;
     margin: 0 10vw;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    overflow: auto;
 
     .card{
         margin: 10px;
@@ -63,5 +65,9 @@ const categorystore = useCategoryStore()
                     0 0 20px gray,
                     0 0 30px gray;
     }
+}
+
+.container_category::-webkit-scrollbar{
+    display: none;
 }
 </style>
