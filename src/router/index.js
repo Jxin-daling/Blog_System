@@ -56,6 +56,14 @@ export const indexchildren = [
             hidden:false
         }
     },
+    {
+        path:'/detail/:aid',
+        component:()=>import('@/views/Detail/index.vue'),
+        meta:{
+            title:'详情',
+            hidden:true
+        }
+    },
 ]
 
 export const routes = [
@@ -65,14 +73,6 @@ export const routes = [
         component:()=>import('@/views/Layout/index.vue'),
         children:indexchildren,
         meta:{
-            hidden:true
-        }
-    },
-    {
-        path:'/detail/:aid',
-        component:()=>import('@/views/Detail/index.vue'),
-        meta:{
-            title:'详情',
             hidden:true
         }
     },
@@ -184,7 +184,8 @@ export const routes = [
         path:'/:pathMatch(.*)*',
         component:()=>import('@/views/TheTip/Error.vue'),
         meta:{
-            title:'走丢了'
+            title:'走丢了',
+            hidden:true
         }
     },
     
