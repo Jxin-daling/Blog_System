@@ -125,6 +125,7 @@ const confirmA = async()=>{
 
 const cancel = ()=>{
     dialogFormVisibleA.value = false
+    dialogFormVisibleB.value = false
 }
 
 // 添加/更新文章配图的对话框
