@@ -1,5 +1,5 @@
-# blog_system
-项目使用方式：
+# 项目使用方式：  
+
 1.在根目录blog_system和nodeServe下运行npm i下载所需的npm依赖包  
 
 2.在根目录下运行npm run dev命令启动前端  
