@@ -71,6 +71,10 @@ onMounted(()=>{
           height: 80%;
         }
     }
+
+    .detail_content{
+      line-height: 2;
+    }
   }
 }
 </style>
