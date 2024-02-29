@@ -8,7 +8,7 @@
                 <div class="about_content">
                     <div class="last">
                         <h3>我有什么</h3>
-                        <div>现在掌握了html5、css3、javascript、vue3(但尚有知识缺陷),还会用node写后端连接数据库,jq?php?android?虽然学过，但是不是我的菜</div>
+                        <div>现在掌握、熟悉了html5、css3、javascript、vue3(但尚有知识缺陷),还会用node写后端连接数据库,jq?php?android?虽然学过，但是不是我的菜</div>
                     </div>
 
                     <div class="now">
@@ -19,7 +19,7 @@
 
                     <div class="after">
                         <h3>未来想做什么</h3>
-                        <div>做游戏，嗯，对，做一个游戏，心中又有一个宏伟蓝图，希望有朝一日能够描绘出来带给大家</div>
+                        <div>做游戏，嗯，对，做一个游戏，心中拥有一个宏伟蓝图，希望有朝一日能够描绘出来带给大家</div>
                     </div>
                 </div>
                 <div>联系地址(github):<a href="https://github.com/Jxin-daling">https://github.com/Jxin-daling</a></div>
