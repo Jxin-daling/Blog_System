@@ -17,7 +17,7 @@ router.get('/getmessage',async(req,res)=>{
 // 添加一条访客留言记录
 router.post('/postmessagevisitor',async(req,res)=>{
     const { visitorname, content } = req.query
-    // await res.execSql(`insert into msvisitorstate (visitorname, content) values ('${visitorname}','${content}')`)
+    await res.execSql(`insert into msvisitorstate (visitorname, content) values ('${visitorname}','${content}')`)
     res.json({
         status:200,
         msg:'post ok'
