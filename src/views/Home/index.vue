@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <el-row>
-          <el-col :span="19">
-            <LeftItem/>
-          </el-col>
+        <el-col :span="19">
+          <LeftItem/>
+        </el-col>
         <el-col :span="5">
           <RightItem/>
         </el-col>

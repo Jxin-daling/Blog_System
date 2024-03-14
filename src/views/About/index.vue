@@ -8,13 +8,13 @@
                 <div class="about_content">
                     <div class="last">
                         <h3>我有什么</h3>
-                        <div>现在掌握、熟悉了html5、css3、javascript、vue3(但尚有知识缺陷),还会用node写后端连接数据库,jq?php?android?虽然学过，但是不是我的菜</div>
+                        <div>现在掌握、熟悉了html5、css3、javascript、vue3(但尚有知识缺陷),还会用node写后端连接数据库,jq?php?android?虽然学过，可能不是我的菜，最终我选择了专攻vue和小程序</div>
                     </div>
 
                     <div class="now">
                         <h3>现在在干什么</h3>
                         <div>正在学习微信小程序，扩宽自己的代码业务范围，打算在实习结束之前写个小程序项目</div>
-                        <div>空闲时间在学隔壁的C语言，还有用数位板练画画，虽然我真的没有艺术细胞啊</div>
+                        <div>空闲时间在学的c...cocos，让自己的技术栈开花，还有用数位板练画画，虽然我真的没有艺术细胞啊</div>
                     </div>
 
                     <div class="after">

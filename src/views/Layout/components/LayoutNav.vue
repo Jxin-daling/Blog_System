@@ -8,7 +8,7 @@
                     <router-link :to="`/`+item.path">{{ item.meta.title }}</router-link>
                 </el-col>
             </template>
-            </el-row>
+        </el-row>
     </div>
 </template>
 
