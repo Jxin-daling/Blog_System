@@ -1,4 +1,4 @@
-import { createRouter,createWebHashHistory } from "vue-router";
+import { createRouter,createWebHistory } from "vue-router";
 
 // 前端二级路由
 export const indexchildren = [
@@ -78,7 +78,7 @@ export const routes = [
     },
     // 后台路由
     {
-        path:'/Jxin',
+        path:'/admin',
         meta:{
             hidden:true
         },
@@ -192,7 +192,7 @@ export const routes = [
 ]
 
  const router = createRouter({
-    history:createWebHashHistory(import.meta.env.BASE_URL),
+    history:createWebHistory(import.meta.env.BASE_URL),
     routes,
     linkActiveClass:'active'
 })
