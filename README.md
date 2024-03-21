@@ -9,3 +9,5 @@
 4.blogsystem_database.sql包含数据库blogsystem_database所有表文件,请在blogsystem_database库中导入使用  
 
 5.nodeServe下的public/immages文件夹是图片上传的存储文件夹  
+
+6./admin路径为后台管理系统，无数据时可以使用右上角刷新按钮刷新
