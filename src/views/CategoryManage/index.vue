@@ -76,7 +76,6 @@ const dialogFormVisibleB = ref(false)
 const categoryArr = ref([])
 
 // 表格数据
-categoryArr.value = categorystore.categorylist.msg
 
 // 图片上传
 let file = ref()
@@ -165,9 +164,12 @@ const removePic = (row)=>{
     const {cid} = row
     delCategoryApi({cid})
 }
+import { getCategoryApi,getCategoryListApi } from '@/apis/category'
 
-onMounted(()=>{
-    categorystore.getcategory()
+onMounted(async()=>{
+    await categorystore.getcategory()
+    categoryArr.value = categorystore.categorylist.msg
+
 })
 </script>
 

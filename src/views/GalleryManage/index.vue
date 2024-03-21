@@ -73,12 +73,6 @@ const dialogFormVisibleB = ref(false)
 
 // 数据存储
 const galleryArr = ref([])
-// 总条数
-const total = ref()
-
-// 表格数据
-galleryArr.value = gallerystore.gallerylist.msg
-total.value = gallerystore.gallerylist.total
 
 // 图片上传
 let file = ref()
@@ -167,8 +161,9 @@ const removePic = (row)=>{
     delGalleryApi({pid})
 }
 
-onMounted(()=>{
-    gallerystore.getgallery()
+onMounted(async()=>{
+    await gallerystore.getgallery()
+    galleryArr.value = gallerystore.gallerylist.msg
 })
 </script>
 

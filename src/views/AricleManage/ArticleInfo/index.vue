@@ -78,7 +78,6 @@ const dialogFormVisibleB = ref(false)
 const aclArr = ref([])
 
 // 表格数据
-aclArr.value = articlestore.articlelist
 const formRef = ref()
 
 const articleForm = ref({
@@ -169,8 +168,9 @@ const removeAcl = (row)=>{
     delArticleApi({aid,cid})
 }
 
-onMounted(()=>{
-    articlestore.getarticle()
+onMounted(async()=>{
+    await articlestore.getarticle()
+    aclArr.value = articlestore.articlelist
 })
 </script>
 

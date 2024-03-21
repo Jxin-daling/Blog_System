@@ -26,7 +26,6 @@ const messagestore = useMessageStore()
 
 // 回复数据 
 const messageArr = ref()
-messageArr.value = messagestore.messagereplylist
 
 // 删除回复
 const remove = (item)=>{
@@ -34,8 +33,9 @@ const remove = (item)=>{
     delReplyApi({mpid})
 }
 
-onMounted(()=>{
-    messagestore.getmessagereply()
+onMounted(async()=>{
+    await messagestore.getmessagereply()
+    messageArr.value = messagestore.messagereplylist
 })
 </script>
 

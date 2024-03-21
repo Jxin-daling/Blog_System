@@ -59,7 +59,6 @@ const rules = reactive({
 const formRef = ref()
 
 const messageArr = ref()
-messageArr.value = messagestore.messagevisitorlist
 
 // 回复评论
 const reply = (item)=>{
@@ -89,8 +88,9 @@ const cancel = ()=>{
     dialogFormVisible.value = false
 }
 
-onMounted(()=>{
-    messagestore.getmessagevisitor()
+onMounted(async()=>{
+    await messagestore.getmessagevisitor()
+    messageArr.value = messagestore.messagevisitorlist
 })
 </script>
 
